@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Same two font families as the marketing site: Plus Jakarta Sans for
+   everything, Material Symbols Outlined for icons. Keeping the icon
+   system identical (no swap to lucide/heroicons) so iconography never
+   feels like a different product. */
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap");
+
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer base {
+  * {
+    @apply border-outline-variant;
+  }
+  body {
+    @apply bg-background text-on-background font-body-md antialiased;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background rounded-sm;
+  }
+}
+
+@layer components {
+  /* The single glass-card recipe used by the landing page, lifted into
+     one reusable class instead of re-typing the utility soup on every
+     card. Visually identical output to index.html's inline classes. */
+  .glass-card {
+    @apply bg-white/40 border border-white/60 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.05)] rounded-lg;
+  }
+  .glass-panel {
+    @apply bg-white/30 border border-white/50 backdrop-blur-md shadow-sm rounded-lg;
+  }
+  .glass-pill {
+    @apply bg-white/40 border border-white/60 backdrop-blur-md rounded-full shadow-sm;
+  }
+  .pill-button-primary {
+    @apply bg-primary text-on-primary font-medium text-body-md px-6 py-3 rounded-full shadow-[0_8px_24px_rgba(255,94,58,0.25)] transition-transform duration-200 hover:scale-[1.02] active:scale-95;
+  }
+  .pill-button-secondary {
+    @apply bg-white/40 text-on-surface border border-white/60 backdrop-blur-md font-medium text-body-md px-6 py-3 rounded-full transition-colors duration-200 hover:bg-white/60 active:scale-95;
+  }
+  .icon-button {
+    @apply flex items-center justify-center rounded-full text-on-surface-variant hover:text-primary hover:bg-white/50 transition-colors duration-200 active:scale-90;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-body-xs font-semibold;
+  }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-gradient-bg {
+  background-size: 200% 200%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+/* Realtime sync pulse used on connected-service indicators */
+.sync-pulse {
+  position: relative;
+}
+.sync-pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: currentColor;
+  opacity: 0.5;
+  animation: pulse-ring 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
